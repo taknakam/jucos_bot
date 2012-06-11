@@ -1,0 +1,4 @@
+cron:
+- description: cron job name
+  url: /.*
+  schedule: every 15 minutes
