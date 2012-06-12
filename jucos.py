@@ -40,7 +40,7 @@ def replytweet(dictin, filenamesincein):
     file.close()
         
 def posttweet(dictin):
-    if random.random() < 0.01:
+    if random.random() < 0.05:
         post = random.choice(dictin)
         # print post
         api.PostUpdate(post)
