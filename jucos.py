@@ -38,7 +38,6 @@ def reply_pattern(tl):
 
 def reply_tweet():
     newest_id = API.GetUserTimeline()[0].id
-    # newest_id = max(tl, key=lambda x: x.id).id
     tl = API.GetFriendsTimeline(since_id=newest_id)
     for tweet in reply_pattern(tl):
         reply = u'@' + tweet.user.screen_name + u' ええー……っ'
@@ -47,6 +46,7 @@ def reply_tweet():
             API.PostUpdate(reply, in_reply_to_status_id=tweet.id)
         except twitter.TwitterError:
             pass
+
     for tweet in jucos_pattern(tl):
         reply = u'@' + tweet.user.screen_name + u' ジャコス行くの！！？'
         print reply
@@ -56,7 +56,7 @@ def reply_tweet():
             pass
 
 def post_tweet(listin):
-    if random.random() < 0.05:
+    if random.random() < 0.01:
         post = random.choice(listin)
         print post
         API.PostUpdate(post)
