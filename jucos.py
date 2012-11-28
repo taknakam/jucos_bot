@@ -36,20 +36,18 @@ def reply_pattern(tl):
             (u'@jucos_bot' in tweet.text)):
             yield tweet
 
-def reply_tweet():
+def reply_tweet(listin1, listin2):
     newest_id = API.GetUserTimeline()[0].id
     tl = API.GetFriendsTimeline(since_id=newest_id)
     for tweet in reply_pattern(tl):
-        reply = u'@' + tweet.user.screen_name + u' ええー……っ'
-        print reply
+        reply = '@' + tweet.user.screen_name + ' ' + random.choice(listin1).decode('utf-8')
         try:
             API.PostUpdate(reply, in_reply_to_status_id=tweet.id)
         except twitter.TwitterError:
             pass
 
     for tweet in jucos_pattern(tl):
-        reply = u'@' + tweet.user.screen_name + u' ジャコス行くの！！？'
-        print reply
+        reply = '@' + tweet.user.screen_name + ' ' + random.choice(listin2).decode('utf-8')
         try:
             API.PostUpdate(reply, in_reply_to_status_id=tweet.id)
         except twitter.TwitterError:
@@ -58,11 +56,15 @@ def reply_tweet():
 def post_tweet(listin):
     if random.random() < 0.01:
         post = random.choice(listin)
-        print post
         API.PostUpdate(post)
 
-FILENAME = 'tweet.txt'
+REPLY = 'reply.txt'
+REPLY_JUCOS = 'reply_jucos.txt'
+TWEET = 'tweet.txt'
 
-tweet_list = [line.strip() for line in open(FILENAME)]
-reply_tweet()
+reply_list = [line.strip() for line in open(REPLY)]
+reply_jucos_list = [line.strip() for line in open(REPLY_JUCOS)]
+tweet_list = [line.strip() for line in open(TWEET)]
+
+reply_tweet(reply_list, reply_jucos_list)
 post_tweet(tweet_list)
