@@ -39,12 +39,12 @@ def reply_pattern(tl):
 def reply_tweet(listin1, listin2):
     newest_id = API.GetUserTimeline()[0].id
     tl = API.GetFriendsTimeline(since_id=newest_id)
-    for tweet in reply_pattern(tl):
-        reply = '@' + tweet.user.screen_name + ' ' + random.choice(listin1).decode('utf-8')
-        try:
-            API.PostUpdate(reply, in_reply_to_status_id=tweet.id)
-        except twitter.TwitterError:
-            pass
+    # for tweet in reply_pattern(tl):
+    #     reply = '@' + tweet.user.screen_name + ' ' + random.choice(listin1).decode('utf-8')
+    #     try:
+    #         API.PostUpdate(reply, in_reply_to_status_id=tweet.id)
+    #     except twitter.TwitterError:
+    #         pass
 
     for tweet in jucos_pattern(tl):
         reply = '@' + tweet.user.screen_name + ' ' + random.choice(listin2).decode('utf-8')
