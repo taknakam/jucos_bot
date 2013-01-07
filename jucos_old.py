@@ -36,28 +36,15 @@ def reply_pattern(tl):
             (u'@jucos_bot' in tweet.text)):
             yield tweet
 
-def id_pattern(fl):
-    rst = set()
-    for user in fl:
-        rst.add(user.id)
-    return rst
-
-def follow_user():
-    follower = API.GetFollowers()
-    following = API.GetFriends()
-    dist1 = id_pattern(follower) - id_pattern(following)
-    for uid in dist1:
-        API.CreateFriendship(uid)
-
 def reply_tweet(listin1, listin2):
     newest_id = API.GetUserTimeline()[0].id
     tl = API.GetFriendsTimeline(since_id=newest_id)
-    for tweet in reply_pattern(tl):
-        reply = '@' + tweet.user.screen_name + ' ' + random.choice(listin1).decode('utf-8')
-        try:
-            API.PostUpdate(reply, in_reply_to_status_id=tweet.id)
-        except twitter.TwitterError:
-            pass
+    # for tweet in reply_pattern(tl):
+    #     reply = '@' + tweet.user.screen_name + ' ' + random.choice(listin1).decode('utf-8')
+    #     try:
+    #         API.PostUpdate(reply, in_reply_to_status_id=tweet.id)
+    #     except twitter.TwitterError:
+    #         pass
 
     for tweet in jucos_pattern(tl):
         reply = '@' + tweet.user.screen_name + ' ' + random.choice(listin2).decode('utf-8')
@@ -79,6 +66,5 @@ reply_list = [line.strip() for line in open(REPLY)]
 reply_jucos_list = [line.strip() for line in open(REPLY_JUCOS)]
 tweet_list = [line.strip() for line in open(TWEET)]
 
-follow_user()
 reply_tweet(reply_list, reply_jucos_list)
 post_tweet(tweet_list)
