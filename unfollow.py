@@ -25,6 +25,7 @@ def unfollow_user():
     dist = id_pattern(following) - id_pattern(follower)
     for uid in dist:
         API.DestroyFriendship(uid)
+        print "unfollow user (uid = ", uid, ")"
 
 if __name__ == "__main__":
     unfollow_user()
